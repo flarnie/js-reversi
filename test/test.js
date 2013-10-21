@@ -1,7 +1,7 @@
 var assert = require("assert")
-var Board = require("./board.js").Board;
-var Piece = require("./piece.js").Piece;
-var Game = require("./game.js").Game;
+var Board = require("../lib/board.js").Board;
+var Piece = require("../lib/piece.js").Piece;
+var Game = require("../lib/game.js").Game;
 
 describe("Piece", function(){
 	var darkPiece = new Piece("black");
@@ -10,12 +10,6 @@ describe("Piece", function(){
 	  it("should have the color assigned to it", function(){
 		  assert.equal(darkPiece.color, "black");
 		  assert.equal(lightPiece.color, "white");
-	  })
-	  it("should only allow black or white", function(){
-		  var makeBadPiece = function(){
-			  new Piece("foo");
-		  };
-		  assert.throw(makeBadPiece(), Error, "Color must be black or white");
 	  })
 	})
 	describe("#flip", function(){
@@ -58,17 +52,17 @@ describe("Board", function(){
 	describe("#full", function(){
 		it("should not begin full", function(){
 			var anotherBoard = new Board();
-			assert.equal(anotherBoard.full, false);
+			assert.equal(anotherBoard.full(), false);
 		})
 		it("should be full if no spots are empty", function(){
 			// Fill the board for the test
 			for(i = 0; i < 8; i ++){
 				for(j = 0; j < 8; j ++){
-					testBoard[i][j] = new Piece("white");
+					testBoard.grid[i][j] = new Piece("white");
 				}
 			}
 			// Test fullness
-		  assert.equal(testBoard.full, true);
+		  assert.equal(testBoard.full(), true);
 		});
 	})
 	
