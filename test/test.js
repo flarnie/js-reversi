@@ -63,11 +63,42 @@ describe("Board", function(){
 			}
 			// Test fullness
 		  assert.equal(testBoard.full(), true);
-		});
+		})
 	})
 	
 })
 
 describe("Game", function(){
-	
+	describe("#placePiece", function(){
+		var testGame = new Game();
+		it("should allow a player to make a valid move", function(){
+			testGame.placePiece([3, 2], "black");
+			assert.equal(testGame.grid[3][2].color, "black");
+		})
+		it("should flip captured pieces", function(){
+			assert.equal(testGame.grid[3][3].color, "black");
+		})
+		it("should not allow moves that don't capture", function(){
+			function makeBadMove(){
+				testGame.placePiece([3, 2], "white")
+			}
+			assert.throw(makeBadMove, Error, "Invalid Move");
+		})
+		it("should not allow moves that isolate pieces", function(){
+			function makeOtherBadMove(){
+				testGame.placePiece([0, 0], "white")
+			}
+			assert.throw(makeOtherBadMove, Error, "Invalid Move");
+		})
+	})
+	describe("players taking turns", function(){
+		var anotherGame = new Game();
+		it("should require black to take first turn", function(){
+			assert.equal(anotherGame.currentPlayer(), "black");
+		})
+		it("should switch players after one takes a turn", function(){
+			testGame.placePiece("black",[2, 3]);
+			assert.equal(anotherGame.currentPlayer(), "white");
+		})
+	})
 })
