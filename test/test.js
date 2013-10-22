@@ -103,7 +103,7 @@ describe("Game", function(){
 			assert.equal(anotherGame.currentPlayer, "black");
 		})
 		it("should switch players after one takes a turn", function(){
-			anotherGame.placePiece("black",[2, 3]);
+			anotherGame.placePiece([[2, 3], "black"]);
 			assert.equal(anotherGame.currentPlayer, "white");
 		})
 	})
