@@ -78,27 +78,33 @@ describe("Game", function(){
 		it("should flip captured pieces", function(){
 			assert.equal(testGame.board.grid[3][3].color, "black");
 		})
-		it("should not allow moves that don't capture", function(){
+		it("should not allow a piece on top of another piece", function(){
 			function makeBadMove(){
-				testGame.placePiece([3, 2], "white")
+			testGame.placePiece([3, 2], "white");
 			}
-			assert.throw(makeBadMove, Error, "Invalid Move");
+			assert.throws(makeBadMove, Error, "Invalid Move");
+		})
+		it("should not allow a move that doesn't capture", function(){
+			function makeBadMove(){
+			testGame.placePiece([2, 3], "white");
+			}
+			assert.throws(makeBadMove, Error, "Invalid Move");
 		})
 		it("should not allow moves that isolate pieces", function(){
 			function makeOtherBadMove(){
-				testGame.placePiece([0, 0], "white")
+				testGame.placePiece([0, 0], "white");
 			};
-			assert.throw(makeOtherBadMove, Error, "Invalid Move");
+			assert.throws(makeOtherBadMove, Error, "Invalid Move");
 		})
 	})
 	describe("players taking turns", function(){
 		var anotherGame = new Game();
 		it("should require black to take first turn", function(){
-			assert.equal(anotherGame.currentPlayer(), "black");
+			assert.equal(anotherGame.currentPlayer, "black");
 		})
 		it("should switch players after one takes a turn", function(){
 			anotherGame.placePiece("black",[2, 3]);
-			assert.equal(anotherGame.currentPlayer(), "white");
+			assert.equal(anotherGame.currentPlayer, "white");
 		})
 	})
 })
